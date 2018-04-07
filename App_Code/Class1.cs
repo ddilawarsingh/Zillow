@@ -1660,7 +1660,7 @@ namespace nszillow
     }
     public class clsprp : clscon
     {
-        public void Save_Rec(clsprpprp p)
+        public Int32 Save_Rec(clsprpprp p)
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -1679,9 +1679,12 @@ namespace nszillow
             cmd.Parameters.Add("@prplstdat", SqlDbType.DateTime).Value = p.prplstdat;
             cmd.Parameters.Add("@prpmanpiccod", SqlDbType.Int).Value = p.prpmanpiccod;
             cmd.Parameters.Add("@prpsts", SqlDbType.Char).Value = p.prpsts;
+            cmd.Parameters.Add("@r", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
             cmd.ExecuteNonQuery();
+            Int32 a = Convert.ToInt32(cmd.Parameters["@r"].Value);
             con.Close();
             cmd.Dispose();
+            return a;
         }
         public void Update_Rec(clsprpprp p)
         {
@@ -1792,6 +1795,15 @@ namespace nszillow
     }
     public class clsprpfet : clscon
     {
+        public DataSet dispprpfet(Int32 prpcod)
+        {
+            SqlDataAdapter adp = new SqlDataAdapter("dispprpfet",con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
         public void Save_Rec(clsprpfetprp p)
         {
             if (con.State == ConnectionState.Closed)
@@ -1836,7 +1848,7 @@ namespace nszillow
             con.Close();
             cmd.Dispose();
         }
-        public List<clsprpfetprp> Display_Rec()
+        public List<clsprpfetprp> Display_Rec() //This Method Should Be checked before using as dispprpfet is changed
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -1861,7 +1873,7 @@ namespace nszillow
             cmd.Dispose();
             con.Close();
             return obj;
-        }
+        } 
         public List<clsprpfetprp> Find_Rec(Int32 prpfetcod)
         {
             if (con.State == ConnectionState.Closed)
@@ -2088,6 +2100,25 @@ namespace nszillow
     }
     public class clsusr : clscon
     {
+        public Int32 logincheck(String eml,String pwd, out Char rol)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand("logincheck", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@eml", SqlDbType.VarChar, 100).Value = eml;
+            cmd.Parameters.Add("@pwd", SqlDbType.VarChar, 100).Value = pwd;
+            cmd.Parameters.Add("@cod", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@rol", SqlDbType.Char, 1).Direction = ParameterDirection.Output;
+            cmd.ExecuteNonQuery();
+            Int32 cod = Convert.ToInt32(cmd.Parameters["@cod"].Value);
+            rol = Convert.ToChar(cmd.Parameters["@rol"].Value);
+            con.Close();
+            cmd.Dispose();
+            return cod;
+        }
         public Int32 Save_Rec(clsusrprp p)
         {
             if (con.State == ConnectionState.Closed)
