@@ -27,6 +27,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
             Session["cod"] = cod;
             if (rol == 'A')
             {
+                //nszillow.clsagt obj1 = new nszillow.clsagt();
+                //List<nszillow.clsagtprp> agt = obj1.Find_Rec(Convert.ToInt32(Session["cod"]));
+                //String url = GetRouteUrl("lstagt", new { agentname = agt[0].agtnam.Replace(" ", String.Empty), agentpage = "Profile"  });
+                //Response.Redirect(url);
                 Response.Redirect("agent/frmprf.aspx");
             }
             else if (rol == 'D')

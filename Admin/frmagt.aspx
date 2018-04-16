@@ -11,7 +11,7 @@
             <h3 class="auto-style1">Search Agents</h3>
         </header>
 
-        <div class="row about-col">
+        <div class="col-md-8 offset-2">
             <div class="form-group">
                 <table class="w-100">
                     <tr>
@@ -41,7 +41,7 @@
                                             <table class="w-100">
                                                 <tr>
                                                     <td rowspan="5">
-                                                        <img src="../agtpics/<%#GetPath(Convert.ToInt32(Eval("agtcod")),Convert.ToString(Eval("agtpic"))) %>" style="border: 12px; height: 150px; width: 150px" />
+                                                        <img src="../agtpics/<%#GetPath(Convert.ToInt32(Eval("agtcod")),Convert.ToString(Eval("agtpic"))) %>" class="rounded-circle img-fluid" style="border: 12px; height: 150px; width: 150px" />
                                                     </td>
                                                     <td>
                                                         <h3><%#Eval("agtnam") %></h3>
@@ -86,7 +86,6 @@
                 </asp:ObjectDataSource>
             </div>
         </div>
-
     </div>
 </asp:Content>
 

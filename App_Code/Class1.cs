@@ -961,12 +961,9 @@ namespace nszillow
             SqlCommand cmd = new SqlCommand("updagt", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@agtcod", SqlDbType.Int).Value = p.agtcod;
-            cmd.Parameters.Add("@agtnam", SqlDbType.VarChar,100).Value = p.agtnam;
-            cmd.Parameters.Add("@agtloccod", SqlDbType.Int).Value = p.agtloccod;
             cmd.Parameters.Add("@agtpic", SqlDbType.VarChar, 50).Value = p.agtpic;
             cmd.Parameters.Add("@agtser", SqlDbType.VarChar, 100).Value = p.agtser;
             cmd.Parameters.Add("@agtprf", SqlDbType.NVarChar, 1000).Value = p.agtprf;
-            cmd.Parameters.Add("@agtusrcod", SqlDbType.Int).Value = p.agtusrcod;
             cmd.ExecuteNonQuery();
             con.Close();
             cmd.Dispose();
@@ -1828,7 +1825,7 @@ namespace nszillow
             SqlCommand cmd = new SqlCommand("updprpfet", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@prpfetcod", SqlDbType.Int).Value = p.prpfetcod;
-            cmd.Parameters.Add("@prpfetprpcod", SqlDbType.Int).Value = p.prpfetprpcod;
+            //cmd.Parameters.Add("@prpfetprpcod", SqlDbType.Int).Value = p.prpfetprpcod;
             cmd.Parameters.Add("@prpfetfetcod", SqlDbType.Int).Value = p.prpfetfetcod;
             cmd.Parameters.Add("@prpfetdsc", SqlDbType.VarChar, 1000).Value = p.prpfetdsc;
             cmd.ExecuteNonQuery();
@@ -1904,7 +1901,7 @@ namespace nszillow
     }
     public class clsprppic : clscon
     {
-        public void Save_Rec(clsprppicprp p)
+        public Int32 Save_Rec(clsprppicprp p)
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -1916,9 +1913,12 @@ namespace nszillow
             cmd.Parameters.Add("@prppicfil", SqlDbType.VarChar, 50).Value = p.prppicfil;
             cmd.Parameters.Add("@prppicdsc", SqlDbType.VarChar, 1000).Value = p.prppicdsc;
             cmd.Parameters.Add("@prppicsts", SqlDbType.Char).Value = p.prppicsts;
+            cmd.Parameters.Add("@r", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
             cmd.ExecuteNonQuery();
+            Int32 a = Convert.ToInt32(cmd.Parameters["@r"].Value);
             con.Close();
             cmd.Dispose();
+            return a;
         }
         public void Update_Rec(clsprppicprp p)
         {
@@ -1950,7 +1950,7 @@ namespace nszillow
             con.Close();
             cmd.Dispose();
         }
-        public List<clsprppicprp> Display_Rec()
+        public List<clsprppicprp> Display_Rec(Int32 prpcod)
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -1958,6 +1958,7 @@ namespace nszillow
             }
             SqlCommand cmd = new SqlCommand("dispprppic", con);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
             SqlDataReader dr = cmd.ExecuteReader();
             List<clsprppicprp> obj = new List<clsprppicprp>();
 

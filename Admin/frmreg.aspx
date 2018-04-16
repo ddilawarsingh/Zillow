@@ -9,7 +9,7 @@
             <h3 class="auto-style1">Agents</h3>
         </header>
 
-        <div class="row about-col">
+        <div class="col-md-8 offset-2">
             <div class="form-group">
                 <table class="w-100">
                     <tr>

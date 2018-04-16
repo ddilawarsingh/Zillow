@@ -39,7 +39,7 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="frmcity.aspx">Cities</a></li>
+                    <li class="menu-active"><a href="frmcty.aspx">Cities</a></li>
                     <li><a href="frmloc.aspx">Locations</a></li>
                     <li><a href="frmprptyp.aspx">Property Type</a></li>
                     <li><a href="frmreg.aspx">Register Agents</a></li>

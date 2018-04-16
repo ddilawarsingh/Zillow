@@ -10,7 +10,7 @@
             <h3 class="auto-style1">Property Type</h3>
         </header>
 
-        <div class="row about-col">
+        <div  class="col-md-8 offset-2">
             <div class="form-group">
                 <table class="w-100">
                     <tr>
@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <asp:gridview id="GridView1" CssClass="table-responsive table-hover table-striped" runat="server" autogeneratecolumns="False" datasourceid="ObjectDataSource1" datakeynames="prptycod">
+                            <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False" datasourceid="ObjectDataSource1" datakeynames="prptycod" Width="800px">
                                 <Columns>
                                     <asp:BoundField DataField="prptypnam" HeaderText="Property Name" SortExpression="prptypnam" />
                                     <asp:CommandField DeleteText="" HeaderText="EDIT" ShowEditButton="True" />

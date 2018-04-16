@@ -9,7 +9,7 @@
             <h3 class="auto-style1">Cities</h3>
         </header>
 
-        <div class="row about-col">
+        <div class="col-md-8 offset-2">
             <div  class="form-group">
                 <br />
                 <table class="w-100">
