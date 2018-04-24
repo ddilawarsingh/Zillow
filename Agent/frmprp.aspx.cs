@@ -35,7 +35,7 @@ public partial class Agent_Default : System.Web.UI.Page
 
         objprp.prpagtcod = Convert.ToInt32(Session["cod"]);
         objprp.prpadd = txtboxadd.Text;
-        objprp.prpcrd = lblcrd.Text;
+        objprp.prpcrd = hidden.Value;
         objprp.prpdsc = txtboxdsc.Text;
         objprp.prplstdat = DateTime.Now;
         objprp.prpmanpiccod = -1;

@@ -1657,6 +1657,47 @@ namespace nszillow
     }
     public class clsprp : clscon
     {
+        public DataSet dispagtprp(Int32 agtcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("dispagtprp", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@agtcod", SqlDbType.Int).Value = agtcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
+        public DataSet dispprpdet(Int32 prpcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("dispprpdet", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
+        public DataSet srcprp(Int32 loccod, Int32 prptycod, Char sts)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("srcprp", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@loccod", SqlDbType.Int).Value = loccod;
+            adp.SelectCommand.Parameters.Add("@prptycod", SqlDbType.Int).Value = prptycod;
+            adp.SelectCommand.Parameters.Add("@sts", SqlDbType.Char,1).Value = sts;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
         public Int32 Save_Rec(clsprpprp p)
         {
             if (con.State == ConnectionState.Closed)

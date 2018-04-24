@@ -43,4 +43,21 @@ public partial class MasterPage : System.Web.UI.MasterPage
             }
         }
     }
+
+    protected void btncreateaccount_Click(object sender, EventArgs e)
+    {
+        nszillow.clsusr obj = new nszillow.clsusr();
+        nszillow.clsusrprp objprp = new nszillow.clsusrprp();
+        objprp.usreml = txtbxemail.Text;
+        objprp.usrpwd = txtbxpw.Text;
+        objprp.usrregdat = DateTime.Now;
+        objprp.usrrol = 'U';
+        try
+        {
+            obj.Save_Rec(objprp);
+        }
+        catch (Exception exp)
+        {
+        }
+    }
 }
