@@ -15,6 +15,17 @@
         Reg_Route(RouteTable.Routes);
     }
 
+    void Application_AuthenticateRequest(object sender, EventArgs e)
+    {
+        if (HttpContext.Current.User != null)
+        {
+            FormsIdentity fi = (FormsIdentity)(User.Identity);
+            String s = fi.Ticket.UserData;
+            String[] r = s.Split(',');
+            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(fi, r);
+        }
+    }
+
     void Application_End(object sender, EventArgs e)
     {
         //  Code that runs on application shutdown

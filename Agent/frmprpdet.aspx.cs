@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
-public partial class _Default : System.Web.UI.Page
+public partial class Agent_Default : System.Web.UI.Page
 {
     private String crd;
     protected void Page_Load(object sender, EventArgs e)
@@ -15,11 +15,7 @@ public partial class _Default : System.Web.UI.Page
         {
             grdbind();
             lstbind();
-            nszillow.clsprp obj = new nszillow.clsprp();
-            DataSet ds = obj.dispprpdet(Convert.ToInt32(Request.QueryString["pcod"]));
-            datalstprpdet.DataSource = ds;
-            datalstprpdet.DataBind();
-            crd = ds.Tables[0].Rows[0]["prpcrd"].ToString();
+            datalistprpBind();
             if (crd.Length > 0)
             {
                 Lat.Value = crd.Split(',')[0].Remove(0, 1);
@@ -27,7 +23,7 @@ public partial class _Default : System.Web.UI.Page
 
             }
         }
-    }   
+    }
 
     protected void datalistpics_ItemDataBound(object sender, DataListItemEventArgs e)
     {
@@ -39,14 +35,23 @@ public partial class _Default : System.Web.UI.Page
             Literal litrl = (Literal)(e.Item.FindControl("literal1"));
             if (k[0].prppicsts == 'P')
             {
-                litrl.Text = "<img src='prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px'/>";
+                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px'/>";
             }
             else
             {
-                litrl.Text = "<embed src='prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px' autoplay='false'/>";
+                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px' autoplay='false'/>";
             }
 
         }
+    }
+
+    private void datalistprpBind()
+    {
+        nszillow.clsprp obj = new nszillow.clsprp();
+        DataSet ds = obj.dispprpdet(Convert.ToInt32(Request.QueryString["pcod"]));
+        datalstprpdet.DataSource = ds;
+        datalstprpdet.DataBind();
+        crd = ds.Tables[0].Rows[0]["prpcrd"].ToString();
     }
 
     private void grdbind()
@@ -72,38 +77,6 @@ public partial class _Default : System.Web.UI.Page
         else
         {
             return pic;
-        }
-    }
-
-    protected void datalstprpdet_ItemCommand(object source, DataListCommandEventArgs e)
-    {
-        if (e.CommandName == "bookapp")
-        {
-            if (Session["cod"] == null)
-            {
-                Response.Redirect("index.aspx");
-            }
-            else
-            {
-                Response.Redirect("frmapp.aspx?pcod="+Request.QueryString["pcod"]);
-            }
-        }
-        if (e.CommandName == "addtofav")
-        {
-            if (Session["cod"] == null)
-            {
-                Response.Redirect("index.aspx");
-            }
-            else
-            {
-                nszillow.clsfav obj = new nszillow.clsfav();
-                nszillow.clsfavprp objprp = new nszillow.clsfavprp();
-                objprp.favdat = DateTime.Now;
-                objprp.favprpcod = Convert.ToInt32(Request.QueryString["pcod"]);
-                objprp.favusrcod = Convert.ToInt32(Session["cod"]);
-                obj.Save_Rec(objprp);
-                Response.Redirect("frmfav.aspx");
-            }
         }
     }
 }

@@ -25,9 +25,11 @@ public partial class _Default : System.Web.UI.Page
     }
 
 
-
-    protected void grdview1_RowEditing(object sender, GridViewEditEventArgs e)
+    protected void datalistsrcresult_ItemCommand(object source, DataListCommandEventArgs e)
     {
-        Response.Redirect("frmprpdet.aspx?pcod="+grdview1.DataKeys[e.NewEditIndex][0].ToString());
+        if (e.CommandName == "viewdetails")
+        {
+            Response.Redirect("frmprpdet.aspx?pcod=" + e.CommandArgument.ToString());
+        }
     }
 }

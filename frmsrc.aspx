@@ -60,8 +60,8 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-6">
-                    <asp:GridView CssClass="col-md-12" ID="grdview1" AutoGenerateColumns="false" runat="server" DataSourceID="ObjectDataSource4" DataKeyNames="prpcod,agtcod" OnRowEditing="grdview1_RowEditing">
+                <%--   <div class="col-md-6">
+                    <asp:GridView ShowHeader="false" CssClass="col-md-12" ID="grdview1" AutoGenerateColumns="false" runat="server" DataSourceID="ObjectDataSource4" DataKeyNames="prpcod,agtcod" OnRowEditing="grdview1_RowEditing">
                         <Columns>
                             <asp:TemplateField>
                                 <ItemTemplate>
@@ -113,8 +113,87 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                </div>
-                <div id="map" class="col-md-6">
+                </div>--%>
+                <div class="col-md-12">
+                    <asp:DataList ID="datalistsrcresult" DataKeyField="prpcod" runat="server" RepeatColumns="2" DataSourceID="ObjectDataSource4" OnItemCommand="datalistsrcresult_ItemCommand">
+                        <ItemTemplate>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <img src="prpfils/<%#GetPath(Convert.ToString(Eval("pic"))) %>" class="img" style="border: 12px; height: 300px; width: 300px" />
+                                    </td>
+                                    <td align="center">
+                                        <table class="col-md-12 table-striped">
+                                            <colgroup>
+                                                <col style="width:800px" />
+                                                <col style="width:800px"/>
+                                            </colgroup>
+                                            <tr>
+                                                <td align="center" colspan="2">
+                                                   <h3><a href="frmprpdet.aspx?pcod=<%#Eval("prpcod")%>"><%#Eval("prptit") %></a></h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label><b>Listed On</b></label>
+                                                </td>
+                                                <td>
+                                                    <%#Eval("prplstdat","{0:dd/M/yyyy}") %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label><b>Description</b></label>
+                                                </td>
+                                                <td>
+                                                    <p><%#Eval("prpdsc") %></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label><b>Price</b></label>
+                                                </td>
+                                                <td>
+                                                    ₹ <%#Eval("prpprc") %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label><b>Agent Name</b></label>
+                                                </td>
+                                                <td>
+                                                    <a href="frmagtprf.aspx?agtcod=<%#Eval("agtcod")%>"><%#Eval("agtnam")%></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label><b>Agent Rating</b></label>
+                                                </td>
+                                                <td>
+                                                    <ajaxToolkit:Rating ID="Rating1" runat="server"
+                                                        CurrentRating='<%#Convert.ToInt32(Eval("rev"))%>'
+                                                        MaxRating="5"
+                                                        StarCssClass="ratingStar"
+                                                        WaitingStarCssClass="savedRatingStar"
+                                                        FilledStarCssClass="filledRatingStar"
+                                                        EmptyStarCssClass="emptyRatingStar"
+                                                        ReadOnly="true">
+                                                    </ajaxToolkit:Rating>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" colspan="2">
+                                                    <asp:Button ID="btnviewdetails" CssClass=" btn-secondary" CommandName="viewdetails" CommandArgument='<%#Eval("prpcod") %>' runat="server" Text="View Details" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                        </ItemTemplate>
+                    </asp:DataList>
+
                 </div>
             </div>
 
@@ -134,31 +213,5 @@
             <asp:ControlParameter ControlID="r1" Name="sts" PropertyName="SelectedValue" Type="Char" />
         </SelectParameters>
     </asp:ObjectDataSource>
-    <script>
-        function initMap() {
-
-            var uluru = { lat: 30.728378724513383, lng: 76.77091062068939 };
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: uluru
-            });
-            var marker = new google.maps.Marker({
-                position: uluru,
-                map: map
-            });
-
-            function placeMarker(location) {
-                marker = new google.maps.Marker({
-                    position: location,
-                    map: map
-                });
-            }
-        }
-    </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCME44ZxJQ_0RgkuATkESUp1yz2Y7XGGFY&callback=initMap">
-    </script>
-
 </asp:Content>
 

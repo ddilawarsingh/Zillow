@@ -44,6 +44,7 @@
                     <li><a href="frmprptyp.aspx">Property Type</a></li>
                     <li><a href="frmreg.aspx">Register Agents</a></li>
                     <li><a href="frmagt.aspx">Search Agents</a></li>
+                    <li><a href="../signout.aspx">Sign Out</a></li>
                 </ul>
             </nav>
             <!-- #nav-menu-container -->

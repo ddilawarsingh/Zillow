@@ -44,6 +44,7 @@
                     <li><a href="frmnewprp.aspx">Add New Property</a></li>
                     <li><a href="frmrev.aspx">Review</a></li>
                     <li><a href="frmapp.aspx">Appointments</a></li>
+                    <li><a href="../signout.aspx">Sign Out</a></li>
                 </ul>
             </nav>
             <!-- #nav-menu-container -->

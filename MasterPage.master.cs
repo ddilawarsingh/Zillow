@@ -4,11 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Security;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        if (Convert.ToBoolean(Session["userLoggedIn"]) == true)
+        {
+            applink.Visible = true;
+            favlink.Visible = true;
+            signoutlink.Visible = true;
+            loginlink.Visible = false;
+            signuplink.Visible = false;
+        }
+        else
+        {
+            applink.Visible = false;
+            favlink.Visible = false;
+            signoutlink.Visible = false;
+            loginlink.Visible = true;
+            signuplink.Visible = true;
+        }
 
     }
 
@@ -17,29 +35,33 @@ public partial class MasterPage : System.Web.UI.MasterPage
         nszillow.clsusr obj = new nszillow.clsusr();
         Int32 cod;
         Char rol;
-        cod = obj.logincheck(txteml.Text,txtpwd.Text,out rol);
+        cod = obj.logincheck(txteml.Text, txtpwd.Text, out rol);
         if (cod == -1 || cod == -2)
         {
             Label1.Text = "Email or Password Incorrect";
         }
         else
         {
+            FormsAuthenticationTicket tk = new FormsAuthenticationTicket(1, txteml.Text, DateTime.Now, DateTime.Now.AddHours(2),false, rol.ToString());
+            String s = FormsAuthentication.Encrypt(tk);
+            HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, s);
+            Response.Cookies.Add(ck);
             Session["cod"] = cod;
             if (rol == 'A')
             {
-                //nszillow.clsagt obj1 = new nszillow.clsagt();
-                //List<nszillow.clsagtprp> agt = obj1.Find_Rec(Convert.ToInt32(Session["cod"]));
-                //String url = GetRouteUrl("lstagt", new { agentname = agt[0].agtnam.Replace(" ", String.Empty), agentpage = "Profile"  });
-                //Response.Redirect(url);
                 Response.Redirect("agent/frmprf.aspx");
             }
             else if (rol == 'D')
             {
+                //FormsAuthentication.RedirectFromLoginPage()
+                //FormsAuthentication.RedirectFromLoginPage("ADMIN", false);
+                //Session["userLoggedIn"] = false;
                 Response.Redirect("admin/frmcty.aspx");
             }
-            else if(rol == 'U')
+            else if (rol == 'U')
             {
-
+                Session["userLoggedIn"] = true;
+                Response.Redirect("index.aspx");
             }
         }
     }

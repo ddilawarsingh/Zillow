@@ -921,6 +921,19 @@ namespace nszillow
 
     public class clsagt : clscon
     {
+        public DataSet dispagtprf(Int32 agtcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("dispagtprf",con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@agtcod", SqlDbType.Int).Value = agtcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
         public DataSet dispagtbyloc(Int32 loccod)
         {
             if (con.State == ConnectionState.Closed)
@@ -1043,7 +1056,22 @@ namespace nszillow
         }
     }
     public class clsagtrev : clscon
-    {
+    { 
+        public DataSet Disp_Rev_By_Agent(Int32 agtcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("disprevbyagt", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@agtcod", SqlDbType.Int).Value = agtcod;
+
+            DataSet ds = new DataSet();
+
+            adp.Fill(ds);
+            return ds;
+        }
         public void Save_Rec(clsagtrevprp p)
         {
             if (con.State == ConnectionState.Closed)
@@ -1160,6 +1188,37 @@ namespace nszillow
     }
     public class clsapp : clscon
     {
+        public DataSet Find_Rec_By_Agent(Int32 agtcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("findappbyagt", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@agtcod", SqlDbType.Int).Value = agtcod;
+
+            DataSet ds = new DataSet();
+
+            adp.Fill(ds);
+            return ds;
+        }
+        public DataSet Find_Rec_By_User(Int32 appusrcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("findappbyusr", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@appusrcod", SqlDbType.Int).Value = appusrcod;
+
+            DataSet ds = new DataSet();
+
+            adp.Fill(ds);
+            return ds;
+            
+        }
         public void Save_Rec(clsappprp p)
         {
             if (con.State == ConnectionState.Closed)
@@ -1187,12 +1246,12 @@ namespace nszillow
             SqlCommand cmd = new SqlCommand("updapp", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@appcod", SqlDbType.Int).Value = p.appcod;
-            cmd.Parameters.Add("@appusrcod", SqlDbType.Int).Value = p.appusrcod;
-            cmd.Parameters.Add("@appprpcod", SqlDbType.Int).Value = p.appprpcod;
+            //cmd.Parameters.Add("@appusrcod", SqlDbType.Int).Value = p.appusrcod;
+            //cmd.Parameters.Add("@appprpcod", SqlDbType.Int).Value = p.appprpcod;
             cmd.Parameters.Add("@appdat", SqlDbType.DateTime).Value = p.appdat;
             cmd.Parameters.Add("@appdsc", SqlDbType.VarChar, 1000).Value = p.appdsc;
             cmd.Parameters.Add("@appphn", SqlDbType.VarChar, 1000).Value = p.appphn;
-            cmd.Parameters.Add("@appsts", SqlDbType.Char).Value = p.appsts;
+            //cmd.Parameters.Add("@appsts", SqlDbType.Char).Value = p.appsts;
             cmd.ExecuteNonQuery();
             con.Close();
             cmd.Dispose();
@@ -1364,6 +1423,19 @@ namespace nszillow
     }
     public class clsfav : clscon
     {
+        public DataSet findfavbyusr(Int32 usrcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("findfavbyusr", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@usrcod", SqlDbType.Int).Value = usrcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds;
+        }
         public void Save_Rec(clsfavprp p)
         {
             if (con.State == ConnectionState.Closed)
@@ -2266,4 +2338,17 @@ namespace nszillow
             return obj;
         }
     }
+
+    public class misc
+    {
+        public static void showMessageAndRedirect(String MyMessage,String pageName)
+        {
+            //string MyMessage = "Redirecting you to the start page...";
+            string ScriptString = "alert('" + MyMessage + ".');window.open('"+pageName+"','_self');";
+
+            System.Web.UI.Page page = HttpContext.Current.Handler as System.Web.UI.Page;
+            page.ClientScript.RegisterStartupScript(typeof(System.Web.UI.Page), "ClientScript", ScriptString, true);
+        }
+    }
+
 }
