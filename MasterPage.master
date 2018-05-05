@@ -133,31 +133,41 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="ModalTitle">Login</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;</button>
+                    </div>
                     <div class="modal-body">
                         <div class="--login-sec">
-                            <h3>Login</h3>
-                            <!-- form login -->
+                            <div class="box-panel">
 
-                            <div class="form-group">
-                                <label>Email</label>
-                                <asp:TextBox ID="txteml" CssClass="form-control" runat="server" />
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <asp:TextBox ID="txtpwd" CssClass="form-control" runat="server" TextMode="Password" />
-                            </div>
+                                <!-- form login -->
 
-                            <asp:Button ID="btn1" runat="server" CssClass="btn btn-primary btn-lg btn-block"
-                                Text="Login" OnClick="btn1_Click" />
-                            <br />
-                            <div class="form-group">
-                                <asp:Label ID="Label1" runat="server" Text="" CssClass="form-control"></asp:Label>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <asp:TextBox ID="txteml" CssClass="form-control" placeHolder="Enter Email" runat="server" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatoreml" ControlToValidate="txteml" runat="server" ForeColor="Red" ErrorMessage="Email Required" ValidationGroup="login"></asp:RequiredFieldValidator>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <asp:TextBox ID="txtpwd" CssClass="form-control" MaxLength="15" placeHolder="Enter Password" runat="server" TextMode="Password" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorpwd" runat="server" ForeColor="Red" ControlToValidate="txtpwd" ErrorMessage="Password Required" ValidationGroup="login"></asp:RequiredFieldValidator>
+                                </div>
+
+                                <asp:Button ID="btn1" runat="server" CssClass="btn btn-primary btn-lg btn-block" ValidationGroup="login"
+                                    Text="Login" OnClick="btn1_Click" />
+                                <br />
+                                <div class="alert alert-danger" id="dvMessage" runat="server" visible="false">
+                                    <strong>Error!</strong>
+                                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default close-btn" data-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default close-btn" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,10 +177,15 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="ModalTitleSign">Create Account</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;</button>
+                    </div>
                     <div class="modal-body">
                         <div class="signup-sec-inner">
                             <div class="box-panel">
-                                <!-- buttons top -->
+                                <%--<!-- buttons top -->
                                 <div class="text-center">
                                     <a href="#" class="btn btn-default facebook"><i class="fa fa-facebook icons"></i>Sign Up with Facebook</a>
                                     <a href="#" class="btn btn-default google"><i class="fa fa-google-plus icons"></i>Sign Up with Google</a>
@@ -178,20 +193,26 @@
                                 <!-- end buttons top -->
                                 <p class="text-center OR-sec">
                                     <span class="span-line">OR</span>
-                                </p>
+                                </p>--%>
                                 <!-- form login -->
-
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <asp:TextBox ID="txtbxemail" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtbxemail" CssClass="form-control" runat="server" placeHolder="Enter Email"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorCreateEmail" ForeColor="Red" Text="*" ControlToValidate="txtbxemail" runat="server" ErrorMessage="Email Required" ValidationGroup="CreateAccount">
+                                    </asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidatorCreateEmail" runat="server" Text="*" ValidationExpression="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" ForeColor="Red" ControlToValidate="txtbxemail" ErrorMessage="Enter Valid Email" ValidationGroup="CreateAccount">
+                                    </asp:RegularExpressionValidator>
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <asp:TextBox ID="txtbxpw" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtbxpw" TextMode="Password" CssClass="form-control" placeHolder="Enter Password" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorCreatepwd" runat="server" ForeColor="Red" Text="*" ControlToValidate="txtbxpw" ValidationGroup="CreateAccount" ErrorMessage="Password Required"></asp:RequiredFieldValidator>
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <asp:TextBox ID="txtbxconpw" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtbxconpw" TextMode="Password" CssClass="form-control" placeHolder="Re-Enter Password" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorCreateConfpwd" runat="server" ForeColor="Red" Text="*" ControlToValidate="txtbxconpw" ErrorMessage="Confirm Password Required" ValidationGroup="CreateAccount">*</asp:RequiredFieldValidator>
+                                    <asp:CompareValidator ID="CompareValidatorPwd" runat="server" ControlToValidate="txtbxconpw" Text="*" ControlToCompare="txtbxpw" Operator="Equal" ValidationGroup="CreateAccount" Type="String" ForeColor="Red" ErrorMessage="Password And Confirm Password Do Not Match"></asp:CompareValidator>
                                 </div>
                                 <div class="form-group">
                                     <div class="">
@@ -201,8 +222,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <asp:Button ID="btncreateaccount" class="btn btn-primary btn-lg btn-block" OnClick="btncreateaccount_Click" runat="server" Text="Create Account"></asp:Button>
-
+                                <asp:Button ID="btncreateaccount" class="btn btn-primary btn-lg btn-block" ValidationGroup="CreateAccount" OnClick="btncreateaccount_Click" runat="server" Text="Create Account"></asp:Button>
+                                <div class="form-group">
+                                    <asp:ValidationSummary ForeColor="Red" ID="ValidationSummaryCreateAcc" ValidationGroup="CreateAccount" runat="server" />
+                                </div>
                                 <!-- form login -->
                             </div>
                         </div>

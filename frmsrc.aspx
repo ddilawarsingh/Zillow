@@ -26,7 +26,7 @@
                             </td>
                             <td>
                                 <asp:RadioButtonList ID="r1" CssClass="btn-group btn-group-toggle" runat="server" RepeatDirection="Horizontal" AutoPostBack="True">
-                                    <asp:ListItem Selected="True" Value="P">Purchase</asp:ListItem>
+                                    <asp:ListItem Selected="True" Value="S">Purchase</asp:ListItem>
                                     <asp:ListItem Value="R">Rent</asp:ListItem>
                                 </asp:RadioButtonList>
                             </td>

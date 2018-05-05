@@ -32,36 +32,40 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        nszillow.clsusr obj = new nszillow.clsusr();
-        Int32 cod;
-        Char rol;
-        cod = obj.logincheck(txteml.Text, txtpwd.Text, out rol);
-        if (cod == -1 || cod == -2)
+        if (Page.IsValid)
         {
-            Label1.Text = "Email or Password Incorrect";
-        }
-        else
-        {
-            FormsAuthenticationTicket tk = new FormsAuthenticationTicket(1, txteml.Text, DateTime.Now, DateTime.Now.AddHours(2),false, rol.ToString());
-            String s = FormsAuthentication.Encrypt(tk);
-            HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, s);
-            Response.Cookies.Add(ck);
-            Session["cod"] = cod;
-            if (rol == 'A')
+            nszillow.clsusr obj = new nszillow.clsusr();
+            Int32 cod;
+            Char rol;
+            cod = obj.logincheck(txteml.Text, txtpwd.Text, out rol);
+            if (cod == -1 || cod == -2)
             {
-                Response.Redirect("agent/frmprf.aspx");
+                dvMessage.Visible = true;
+                Label1.Text = "Email or Password Incorrect";
             }
-            else if (rol == 'D')
+            else
             {
-                //FormsAuthentication.RedirectFromLoginPage()
-                //FormsAuthentication.RedirectFromLoginPage("ADMIN", false);
-                //Session["userLoggedIn"] = false;
-                Response.Redirect("admin/frmcty.aspx");
-            }
-            else if (rol == 'U')
-            {
-                Session["userLoggedIn"] = true;
-                Response.Redirect("index.aspx");
+                FormsAuthenticationTicket tk = new FormsAuthenticationTicket(1, txteml.Text, DateTime.Now, DateTime.Now.AddHours(2), false, rol.ToString());
+                String s = FormsAuthentication.Encrypt(tk);
+                HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, s);
+                Response.Cookies.Add(ck);
+                Session["cod"] = cod;
+                if (rol == 'A')
+                {
+                    Response.Redirect("agent/frmprf.aspx");
+                }
+                else if (rol == 'D')
+                {
+                    //FormsAuthentication.RedirectFromLoginPage()
+                    //FormsAuthentication.RedirectFromLoginPage("ADMIN", false);
+                    //Session["userLoggedIn"] = false;
+                    Response.Redirect("admin/frmcty.aspx");
+                }
+                else if (rol == 'U')
+                {
+                    Session["userLoggedIn"] = true;
+                    Response.Redirect("index.aspx");
+                }
             }
         }
     }

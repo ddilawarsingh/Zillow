@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -46,8 +47,31 @@ public partial class Admin_Default : System.Web.UI.Page
         
         objprp.agtcod = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
         objprp.agtusrcod = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[1]);
-        obj.Delete_Rec(objprp);
-        GridView1.DataBind();
+        try
+        {
+            obj.Delete_Rec(objprp);
+            GridView1.DataBind();
+        }
+        catch (SqlException exp)
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('ERROR! Deleting Agent')", true);
+        }
+    }
+
+    protected void DropDownLoc_DataBound(object sender, EventArgs e)
+    {
+        ListItem l = new ListItem();
+        l.Text = "Select Location";
+        l.Value = "-1";
+        DropDownLoc.Items.Insert(0, l);
+    }
+
+    protected void DropDownCity_DataBound(object sender, EventArgs e)
+    {
+        ListItem l = new ListItem();
+        l.Text = "Select City";
+        l.Value = "-1";
+        DropDownCity.Items.Insert(0, l);
     }
 }
 
