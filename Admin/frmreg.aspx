@@ -67,6 +67,16 @@
                         </td>
                     </tr>
                 </table>
+                <br />
+                <div id="divSuc" runat="server" visible="false" class="alert alert-success col-md-8 offset-2 ">
+                    <strong>Success</strong> Agent Registered Successfully! Password will be sent to the entered email.
+                </div>
+                <div id="divFail" runat="server" visible="false" class="alert alert-danger col-md-8 offset-2">
+                    <strong>ERROR!</strong> Agent Registration Failed!
+                </div>
+                <div id="divEmailExists" runat="server" visible="false" class="alert alert-danger col-md-8 offset-2">
+                    <strong>ERROR!</strong> Registration failed as entered e-mail already exists
+                </div>
                 <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Display_Rec" TypeName="nszillow.clscity"></asp:ObjectDataSource>
                 <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" SelectMethod="Display_Rec" TypeName="nszillow.clsloc">
                     <SelectParameters>

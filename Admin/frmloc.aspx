@@ -53,9 +53,9 @@
         </script>
         <br />
         <br />
-        <div class="col-md-10 offset-1">
-            <div class="col-md-12">
-                <table class="table-responsive">
+        <div class="col-md-10 offset-1" align="center">
+            <div class="col-md-12" align="center">
+                <table class="table-responsive" align="center">
                     <colgroup>
                         <col style="width:30% "/>
                         <col style="width:50% "/>

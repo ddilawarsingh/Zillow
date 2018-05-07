@@ -15,6 +15,11 @@ public partial class Admin_Default : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        searchResults();
+    }
+
+    private void searchResults()
+    {
         nszillow.clsagt obj = new nszillow.clsagt();
         if (DropDownLoc.Items.Count != 0)
         {
@@ -50,7 +55,7 @@ public partial class Admin_Default : System.Web.UI.Page
         try
         {
             obj.Delete_Rec(objprp);
-            GridView1.DataBind();
+            searchResults();
         }
         catch (SqlException exp)
         {

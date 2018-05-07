@@ -1729,6 +1729,20 @@ namespace nszillow
     }
     public class clsprp : clscon
     {
+        public void setAsMainPic(Int32 prpcod, Int32 prppiccod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand("setAsMainPic", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
+            cmd.Parameters.Add("@prppiccod", SqlDbType.Int).Value = prppiccod;
+            cmd.ExecuteNonQuery();
+            con.Close();
+            cmd.Dispose();
+        }
         public DataSet dispagtprp(Int32 agtcod)
         {
             if (con.State == ConnectionState.Closed)
@@ -1820,7 +1834,7 @@ namespace nszillow
             con.Close();
             cmd.Dispose();
         }
-        public void Delete_Rec(clsprpprp p)
+        public void Delete_Rec(Int32 prpcod)
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -1828,7 +1842,7 @@ namespace nszillow
             }
             SqlCommand cmd = new SqlCommand("delprp", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@prpcod", SqlDbType.Int).Value = p.prpcod;
+            cmd.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
             cmd.ExecuteNonQuery();
             con.Close();
             cmd.Dispose();
@@ -2042,15 +2056,12 @@ namespace nszillow
             SqlCommand cmd = new SqlCommand("updprppic", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@prppiccod", SqlDbType.Int).Value = p.prppiccod;
-            cmd.Parameters.Add("@prppicprpcod", SqlDbType.Int).Value = p.prppicprpcod;
-            cmd.Parameters.Add("@prppicfil", SqlDbType.VarChar, 50).Value = p.prppicfil;
             cmd.Parameters.Add("@prppicdsc", SqlDbType.VarChar, 1000).Value = p.prppicdsc;
-            cmd.Parameters.Add("@prppicsts", SqlDbType.Char).Value = p.prppicsts;
             cmd.ExecuteNonQuery();
             con.Close();
             cmd.Dispose();
         }
-        public void Delete_Rec(clsprppicprp p)
+        public void Delete_Rec(Int32 prppiccod)
         {
             if (con.State == ConnectionState.Closed)
             {
@@ -2058,7 +2069,7 @@ namespace nszillow
             }
             SqlCommand cmd = new SqlCommand("delprppic", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@prppiccod", SqlDbType.Int).Value = p.prppiccod;
+            cmd.Parameters.Add("@prppiccod", SqlDbType.Int).Value = prppiccod;
             cmd.ExecuteNonQuery();
             con.Close();
             cmd.Dispose();

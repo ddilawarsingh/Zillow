@@ -4,7 +4,7 @@
     <br />
     <br />
     <br />
-    <div class="container" style="left: 3px; top: 1px">
+    <div class="container">
         <header class="section-header">
             <h3 class="auto-style1">Cities</h3>
         </header>

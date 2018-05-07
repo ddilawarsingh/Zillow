@@ -9,6 +9,7 @@ public partial class Agent_Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        txtcrd.Text = Coordinates;
         if (Page.IsPostBack == false)
         {
             TabContainer1.Tabs[1].Enabled = false;
@@ -30,28 +31,31 @@ public partial class Agent_Default : System.Web.UI.Page
 
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        nszillow.clsprp obj = new nszillow.clsprp();
-        nszillow.clsprpprp objprp = new nszillow.clsprpprp();
+        if(Page.IsValid)
+        {
+            nszillow.clsprp obj = new nszillow.clsprp();
+            nszillow.clsprpprp objprp = new nszillow.clsprpprp();
 
-        objprp.prpagtcod = Convert.ToInt32(Session["cod"]);
-        objprp.prpadd = txtboxadd.Text;
-        objprp.prpcrd = hidden.Value;
-        objprp.prpdsc = txtboxdsc.Text;
-        objprp.prplstdat = DateTime.Now;
-        objprp.prpmanpiccod = -1;
-        objprp.prpprc = Convert.ToDouble(txtboxprc.Text);
-        objprp.prpprptycod = Convert.ToInt32(drpprptyp.SelectedValue);
-        objprp.prpsalsts = Convert.ToChar(radiobtnSls.SelectedValue);
-        objprp.prptit = txtboxtit.Text;
-        objprp.prpsts = 'A';
+            objprp.prpagtcod = Convert.ToInt32(Session["cod"]);
+            objprp.prpadd = txtboxadd.Text;
+            objprp.prpcrd = hidden.Value;
+            objprp.prpdsc = txtboxdsc.Text;
+            objprp.prplstdat = DateTime.Now;
+            objprp.prpmanpiccod = -1;
+            objprp.prpprc = Convert.ToDouble(txtboxprc.Text);
+            objprp.prpprptycod = Convert.ToInt32(drpprptyp.SelectedValue);
+            objprp.prpsalsts = Convert.ToChar(radiobtnSls.SelectedValue);
+            objprp.prptit = txtboxtit.Text;
+            objprp.prpsts = 'A';
 
-        ViewState["cod"] = obj.Save_Rec(objprp); ;
-        TabContainer1.Tabs[0].Enabled = false;
-        TabContainer1.Tabs[1].Enabled = true;
-        TabContainer1.Tabs[2].Enabled = true;
-        TabContainer1.ActiveTab = TabContainer1.Tabs[1];
-        
-        
+            ViewState["cod"] = obj.Save_Rec(objprp); ;
+            TabContainer1.Tabs[0].Enabled = false;
+            TabContainer1.Tabs[1].Enabled = true;
+            TabContainer1.Tabs[2].Enabled = true;
+            divMap.Visible = false;
+
+            TabContainer1.ActiveTab = TabContainer1.Tabs[1];
+        }
     }
 
     protected void btnsubmitfet_Click(object sender, EventArgs e)
@@ -157,16 +161,85 @@ public partial class Agent_Default : System.Web.UI.Page
             LinkButton lnkbtnfilselect =(LinkButton) e.Item.FindControl("lnkbtnfilselect");
             if (k[0].prppicsts=='P')
             {
-                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px'/>";
+                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px'/>";
                 lnkbtnfilselect.Visible = true;
 
             }
             else
             {
-                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px' autoplay='false'/>";
+                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px' autoplay='false'/>";
                 lnkbtnfilselect.Visible = false;
             }
-            
         }
+        if (e.Item.ItemType == ListItemType.EditItem)
+        {
+            Int32 prppiccod = Convert.ToInt32(datalistpics.DataKeys[e.Item.ItemIndex]);
+            nszillow.clsprppic obj = new nszillow.clsprppic();
+            List<nszillow.clsprppicprp> k = obj.Find_Rec(prppiccod);
+            Literal litrl = (Literal)(e.Item.FindControl("literal1"));
+            if (k[0].prppicsts == 'P')
+            {
+                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px'/>";
+            }
+            else
+            {
+                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px' autoplay='false'/>";
+            }
+        }
+    }
+
+    protected void datalistpics_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if(e.CommandName=="setAsMainPic")
+        {
+            nszillow.clsprp obj = new nszillow.clsprp();
+            obj.setAsMainPic(Convert.ToInt32(ViewState["cod"]),Convert.ToInt32(e.CommandArgument));
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Success!')", true);
+        }
+    }
+
+    protected void datalistpics_DeleteCommand(object source, DataListCommandEventArgs e)
+    {
+        nszillow.clsprppic obj = new nszillow.clsprppic();
+        List<nszillow.clsprppicprp> objprp;
+        Int32 prppiccod = Convert.ToInt32(datalistpics.DataKeys[e.Item.ItemIndex]);
+        objprp = obj.Find_Rec(prppiccod);
+        obj.Delete_Rec(objprp[0].prppiccod);
+        System.IO.File.Delete(Server.MapPath("../prpfils/"+ datalistpics.DataKeys[e.Item.ItemIndex].ToString()+objprp[0].prppicfil));
+        datalstbind();
+    }
+
+    protected void datalistpics_EditCommand(object source, DataListCommandEventArgs e)
+    {
+        datalistpics.EditItemIndex = e.Item.ItemIndex;
+        datalstbind();
+    }
+
+    protected void datalistpics_UpdateCommand(object source, DataListCommandEventArgs e)
+    {
+        nszillow.clsprppic obj = new nszillow.clsprppic();
+        nszillow.clsprppicprp objprp = new nszillow.clsprppicprp();
+        TextBox txt = (TextBox)(e.Item.FindControl("txtboxpicdsc"));
+        objprp.prppiccod = Convert.ToInt32(e.CommandArgument);
+        objprp.prppicdsc = txt.Text;
+        obj.Update_Rec(objprp);
+        datalistpics.EditItemIndex = -1;
+        datalstbind();
+    }
+
+    protected void drpprptyp_DataBound(object sender, EventArgs e)
+    {
+        ListItem l = new ListItem();
+        l.Text = "Select Property Type";
+        l.Value = "-1";
+        drpprptyp.Items.Insert(0, l);
+    }
+
+    protected void drpdwnlstfet_DataBound(object sender, EventArgs e)
+    {
+        ListItem l = new ListItem();
+        l.Text = "Select Property Feature";
+        l.Value = "-1";
+        drpdwnlstfet.Items.Insert(0, l);
     }
 }

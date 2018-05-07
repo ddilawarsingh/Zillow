@@ -35,11 +35,11 @@ public partial class Agent_Default : System.Web.UI.Page
             Literal litrl = (Literal)(e.Item.FindControl("literal1"));
             if (k[0].prppicsts == 'P')
             {
-                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px'/>";
+                litrl.Text = "<img src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px'/>";
             }
             else
             {
-                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='180px' width='180px' autoplay='false'/>";
+                litrl.Text = "<embed src='../prpfils/" + k[0].prppiccod.ToString() + k[0].prppicfil + "' height='300px' width='300px' autoplay='false'/>";
             }
 
         }
@@ -52,6 +52,7 @@ public partial class Agent_Default : System.Web.UI.Page
         datalstprpdet.DataSource = ds;
         datalstprpdet.DataBind();
         crd = ds.Tables[0].Rows[0]["prpcrd"].ToString();
+        lblheading.Text = ds.Tables[0].Rows[0]["prptit"].ToString();
     }
 
     private void grdbind()
@@ -77,6 +78,18 @@ public partial class Agent_Default : System.Web.UI.Page
         else
         {
             return pic;
+        }
+    }
+
+    protected void datalistpics_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if(e.CommandName=="deletePic")
+        {
+
+        }
+        if (e.CommandName == "setAsMainPic")
+        {
+
         }
     }
 }

@@ -42,6 +42,7 @@
                     <li class="menu-active"><a href="frmcty.aspx">Cities</a></li>
                     <li><a href="frmloc.aspx">Locations</a></li>
                     <li><a href="frmprptyp.aspx">Property Type</a></li>
+                    <li><a href="frmfet.aspx">Property Features</a></li>
                     <li><a href="frmreg.aspx">Register Agents</a></li>
                     <li><a href="frmagt.aspx">Search Agents</a></li>
                     <li><a href="../signout.aspx">Sign Out</a></li>

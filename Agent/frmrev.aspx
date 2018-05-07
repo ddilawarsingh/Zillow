@@ -5,7 +5,7 @@
     <br />
     <br />
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div class="container">
+    <div class="container" style="padding-bottom:100px">
         <header class="section-header">
             <h3 class="auto-style1">Reviews</h3>
         </header>
@@ -15,8 +15,8 @@
                     <ItemTemplate>
                         <table class="table-striped col-md-8 offset-2" border="1">
                             <colgroup>
-                                <col style="width:30%"/>
-                                <col style="width:70%"/>
+                                <col style="width: 30%" />
+                                <col style="width: 70%" />
                             </colgroup>
                             <tr>
                                 <td>
@@ -28,7 +28,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                   <label> <b>For Property</b> </label> 
+                                    <label><b>For Property</b> </label>
                                 </td>
                                 <td>
                                     <%#Eval("prptit")%>
@@ -79,6 +79,12 @@
                         </table>
                         <br />
                     </ItemTemplate>
+                    <FooterTemplate>
+                        <h3 align="center">
+                            <asp:Label Visible='<%#bool.Parse((datalstrev.Items.Count==0).ToString())%>'
+                            runat="server" ID="lblNoRecord" Text="No Record Found!"></asp:Label>
+                        </h3>
+                    </FooterTemplate>
                 </asp:DataList>
             </div>
         </div>

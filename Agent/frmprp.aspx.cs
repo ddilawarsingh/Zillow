@@ -23,12 +23,20 @@ public partial class Agent_Default : System.Web.UI.Page
         }
     }
 
-
     protected void datalistprp_ItemCommand(object source, DataListCommandEventArgs e)
     {
-        if (e.CommandName == "viewdetails")
+        if (e.CommandName == "deleteProperty")
         {
-            Response.Redirect("frmprpdet.aspx?pcod=" + e.CommandArgument.ToString());
+            nszillow.clsprp obj = new nszillow.clsprp();
+            try
+            {
+                obj.Delete_Rec(Convert.ToInt32(e.CommandArgument));
+                datalistprp.DataBind();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

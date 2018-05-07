@@ -9,8 +9,8 @@
             <h3 class="auto-style1">Properties</h3>
         </header>
         <div class="row">
-            <div class="col-md-12">
-                <asp:DataList ID="datalistprp" DataKeyField="prpcod" runat="server" RepeatColumns="2" OnItemCommand="datalistprp_ItemCommand" DataSourceID="ObjectDataSource1">
+            <div class="col-md-12" align="center">
+                <asp:DataList ID="datalistprp" OnItemCommand="datalistprp_ItemCommand" DataKeyField="prpcod" runat="server" RepeatColumns="2" DataSourceID="ObjectDataSource1">
                     <ItemTemplate>
                         <table align="center">
                             <tr>
@@ -78,8 +78,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td align="center" colspan="2">
-                                                <asp:Button ID="btnviewdetails" CssClass=" btn-secondary" CommandName="viewdetails" CommandArgument='<%#Eval("prpcod") %>' runat="server" Text="View Details" />
+                                            <td align="center">
+                                                <a href="frmprpdet.aspx?pcod=<%#Eval("prpcod") %>">View Details </a>
+                                            </td>
+                                            <td align="center">
+                                                <asp:LinkButton ID="deletePrp" runat="server" Text="Delete" OnClientClick="return deleteProperty()" CommandName="deleteProperty" CommandArgument='<%#Eval("prpcod") %>'></asp:LinkButton>
                                             </td>
                                         </tr>
                                     </table>
@@ -88,6 +91,12 @@
                         </table>
                         <br />
                     </ItemTemplate>
+                    <FooterTemplate>
+                        <h3 align="center">
+                            <asp:Label Visible='<%#bool.Parse((datalistprp.Items.Count==0).ToString())%>'
+                            runat="server" ID="lblNoRecord" Text="No Record Found!"></asp:Label>
+                        </h3>
+                    </FooterTemplate>
                 </asp:DataList>
             </div>
         </div>
@@ -97,5 +106,14 @@
             </SelectParameters>
         </asp:ObjectDataSource>
     </div>
+    <script type="text/javascript">
+        function deleteProperty()
+        {
+            if (confirm("Deleting this property will delete all appointments,pictues etc associated with it! Are You Sure?")) {
+                return true;
+            }
+           return false;
+        }
+    </script>
 </asp:Content>
 

@@ -43,17 +43,28 @@ public partial class Admin_Default : System.Web.UI.Page
                 {
                     obj1.Save_Rec(objprp1);
                     clearAll();
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Successfully. Password will be sent to the entered email')", true);
+                    divSuc.Visible = true;
+                    divFail.Visible = false;
+                    divEmailExists.Visible = false;
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Successfully. Password will be sent to the entered email')", true);
                 }
                 catch (Exception exp)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed')", true);
+                    divFail.Visible = true;
+                    divSuc.Visible = false;
+                    divEmailExists.Visible = false;
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed')", true);
                 }
             }
             catch (SqlException exp)
             {
                 if(exp.Message.StartsWith("Violation of UNIQUE KEY constraint"))
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed! Entered Email Already Exists')", true);
+                {
+                    divEmailExists.Visible = true;
+                    divFail.Visible = false;
+                    divSuc.Visible = false;
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed! Entered Email Already Exists')", true);
+                }
             }
 
             
@@ -83,8 +94,8 @@ public partial class Admin_Default : System.Web.UI.Page
 
     private void clearAll()
     {
-        DropDownList1.SelectedIndex = 1;
-        DropDownList2.SelectedIndex = 1;
+        //DropDownList1.SelectedIndex = 1;
+        //DropDownList2.SelectedIndex = 1;
         TextBox1.Text = String.Empty;
         TextBox2.Text = String.Empty;
         TextBox1.Focus();

@@ -58,7 +58,7 @@
             </div>
             <div class="row">
                 <div class="col-md-8 offset-2" align="center">
-                    <asp:GridView ID="GridView1" BorderWidth="0" CssClass="col-md-12" AutoGenerateColumns="false" runat="server" DataKeyNames="agtcod,agtusrcod" OnRowDeleting="GridView1_RowDeleting">
+                    <asp:GridView ID="GridView1" ShowHeaderWhenEmpty="true" BorderWidth="0" CssClass="col-md-12" AutoGenerateColumns="false" runat="server" DataKeyNames="agtcod,agtusrcod" OnRowDeleting="GridView1_RowDeleting">
                         <Columns>
                             <asp:TemplateField HeaderText="Search Results">
                                 <ItemTemplate>
@@ -109,6 +109,11 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <EmptyDataTemplate>
+                            <h3 align="center">
+                                No Record Found!!
+                            </h3>
+                        </EmptyDataTemplate>
                     </asp:GridView>
                 </div>
             </div>

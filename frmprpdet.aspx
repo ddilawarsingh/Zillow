@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-10 offset-1">
                     <br />
-                    <ajaxToolkit:TabContainer CssClass="col-md-12" ID="tabcontprpdet" runat="server">
+                    <ajaxToolkit:TabContainer CssClass="col-md-12" Height="420px" ID="tabcontprpdet" runat="server">
                         <ajaxToolkit:TabPanel ID="tabpan1" HeaderText="Property Details" runat="server">
                             <ContentTemplate>
                                 <div class="form-group">

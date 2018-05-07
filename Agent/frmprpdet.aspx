@@ -12,15 +12,15 @@
         }
     </style>
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div class="container">
+    <div class="container" style="padding-bottom:200px">
         <header class="section-header">
-            <h3 class="auto-style1">Property Details</h3>
+            <h3 class="auto-style1"><asp:Label ID="lblheading" runat="server"></asp:Label></h3>
         </header>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-10 offset-1">
                     <br />
-                    <ajaxToolkit:TabContainer CssClass="col-md-12" ID="tabcontprpdet" runat="server">
+                    <ajaxToolkit:TabContainer CssClass="col-md-12" Height="420px" ID="tabcontprpdet" runat="server">
                         <ajaxToolkit:TabPanel ID="tabpan1" HeaderText="Property Details" runat="server">
                             <ContentTemplate>
                                 <div class="form-group">
@@ -48,11 +48,6 @@
                                                 <tr>
                                                     <td>
                                                         <b>Description:</b><p><%#Eval("prpdsc") %></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <asp:LinkButton ID="lnkbtnedit" runat="server" CommandName="edit" Text="Edit Details"></asp:LinkButton>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -89,10 +84,28 @@
                         <ajaxToolkit:TabPanel ID="tabpan3" runat="server" HeaderText="Property Pictures">
                             <ContentTemplate>
                                 <div class="form-group">
-                                    <asp:DataList ID="datalistpics" DataKeyField="prppiccod" OnItemDataBound="datalistpics_ItemDataBound" RepeatColumns="3" RepeatDirection="Horizontal" CssClass="col-md-12" runat="server">
+                                    <asp:DataList ID="datalistpics" DataKeyField="prppiccod" OnItemDataBound="datalistpics_ItemDataBound" OnItemCommand="datalistpics_ItemCommand" RepeatColumns="3" RepeatDirection="Horizontal" CssClass="col-md-12" runat="server">
                                         <ItemTemplate>
-                                            <asp:Literal ID="literal1" runat="server"></asp:Literal>
-                                            <p><%#Eval("prppicdsc") %></p>
+                                            <table class=" table-active">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:Literal ID="literal1" runat="server"></asp:Literal>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" colspan="2">
+                                                        <p><%#Eval("prppicdsc") %></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">
+                                                        <asp:LinkButton ID="lnkbtnDeletePic" runat="server" CommandName="deletePic" CommandArgument='<%#Eval("prppiccod")%>' Text="Delete"></asp:LinkButton>
+                                                    </td>
+                                                    <td align="center">
+                                                        <asp:LinkButton ID="lnkbtnSetAsMainPic" runat="server" CommandName="setAsMainPic" CommandArgument='<%#Eval("prppiccod") %>' Text="Set As Main Pic"></asp:LinkButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </ItemTemplate>
                                         <EditItemTemplate>
                                         </EditItemTemplate>
