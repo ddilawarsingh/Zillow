@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
 using System.Data.SqlClient;
+using System.Configuration;
 
 public partial class Admin_Default : System.Web.UI.Page
 {
@@ -16,7 +17,7 @@ public partial class Admin_Default : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        if(Page.IsValid)
+        if (Page.IsValid)
         {
             nszillow.clsusr obj = new nszillow.clsusr();
             nszillow.clsusrprp objprp = new nszillow.clsusrprp();
@@ -46,33 +47,30 @@ public partial class Admin_Default : System.Web.UI.Page
                     divSuc.Visible = true;
                     divFail.Visible = false;
                     divEmailExists.Visible = false;
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Successfully. Password will be sent to the entered email')", true);
+
+                    MailMessage mailMessage = new MailMessage("testzillowproject@gmail.com", objprp.usreml);
+                    mailMessage.Subject = "Welcome to Zillow!!";
+                    mailMessage.Body = "Your Password is " + pwd + ". Please Update Your Password as you login first time.";
+                    SmtpClient smtpClient = new SmtpClient();
+                    smtpClient.Send(mailMessage);
+
                 }
-                catch (Exception exp)
+                catch
                 {
                     divFail.Visible = true;
                     divSuc.Visible = false;
                     divEmailExists.Visible = false;
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed')", true);
                 }
             }
             catch (SqlException exp)
             {
-                if(exp.Message.StartsWith("Violation of UNIQUE KEY constraint"))
+                if (exp.Message.StartsWith("Violation of UNIQUE KEY constraint"))
                 {
                     divEmailExists.Visible = true;
                     divFail.Visible = false;
                     divSuc.Visible = false;
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Agent Registered Failed! Entered Email Already Exists')", true);
                 }
             }
-
-            
-
-            //MailMessage mm = new MailMessage("admin@gmail.com", TextBox2.Text, "Password Info", "Your Password is " + pwd);
-            //SmtpClient c = new SmtpClient("mail.ConnectZone.in" + 25);
-            //c.Send(mm);
-            //Response.Redirect("frmagt.aspx");
         }
     }
 
@@ -94,8 +92,6 @@ public partial class Admin_Default : System.Web.UI.Page
 
     private void clearAll()
     {
-        //DropDownList1.SelectedIndex = 1;
-        //DropDownList2.SelectedIndex = 1;
         TextBox1.Text = String.Empty;
         TextBox2.Text = String.Empty;
         TextBox1.Focus();

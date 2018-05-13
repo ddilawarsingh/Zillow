@@ -27,7 +27,7 @@ public partial class Admin_Default : System.Web.UI.Page
             {
                 obj.Save_Rec(objprp);
             }
-            catch (Exception exp)
+            catch
             {
 
             }

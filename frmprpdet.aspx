@@ -4,6 +4,8 @@
     <br />
     <br />
     <br />
+    <br />
+    <br />
     <style>
         #map {
             width: 100%;

@@ -82,7 +82,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             obj.Save_Rec(objprp);
         }
-        catch (Exception exp)
+        catch
         {
         }
     }

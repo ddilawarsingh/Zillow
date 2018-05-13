@@ -1,5 +1,10 @@
 jQuery(document).ready(function( $ ) {
 
+    //Make Links Active and Not Active
+  $('li > a').click(function () {
+      $('li').removeClass();
+      $(this).parent().addClass('menu-active');
+  });
   // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
@@ -99,13 +104,14 @@ jQuery(document).ready(function( $ ) {
   });
 
   // Header scroll class
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 100) {
-      $('#header').addClass('header-scrolled');
-    } else {
-      $('#header').removeClass('header-scrolled');
-    }
-  });
+  //$(window).scroll(function() {
+  //  if ($(this).scrollTop() > 100) {
+  //    $('#header').addClass('header-scrolled');
+  //  } 
+  //  //   else {
+  //  //  $('#header').removeClass('header-scrolled');
+  //  //}
+  //});
 
   // Intro carousel
   var introCarousel = $(".carousel");

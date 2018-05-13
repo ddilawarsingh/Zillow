@@ -31,4 +31,13 @@ public partial class Agent_Default : System.Web.UI.Page
         else
             return pic;
     }
+
+    protected void grdview_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        nszillow.clsappprp objprp = new nszillow.clsappprp();
+        objprp.appcod = Convert.ToInt32(e.Keys[0]);
+        nszillow.clsapp obj = new nszillow.clsapp();
+        obj.Delete_Rec(objprp);
+        gridBind();
+    }
 }

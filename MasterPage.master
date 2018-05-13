@@ -32,7 +32,7 @@
     <!--==========================
     Header
   ============================-->
-    <header id="header">
+    <header id="header" class="header-scrolled">
         <div class="container-fluid">
 
             <div id="logo" class="pull-left">
@@ -42,7 +42,7 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="#intro">Home</a></li>
+                    <li><a href="index.aspx">Home</a></li>
                     <li><a href="frmsrc.aspx">Search</a></li>
                     <li runat="server" id="applink"><a href="frmbookedapp.aspx">Appointments</a></li>
                     <li runat="server" id="favlink"><a href="frmfav.aspx">Favourites</a></li>

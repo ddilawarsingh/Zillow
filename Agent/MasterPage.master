@@ -39,7 +39,7 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="frmprf.aspx">Profile</a></li>
+                    <li><a href="frmprf.aspx">Profile</a></li>
                     <li><a href="frmprp.aspx">Properties</a></li>
                     <li><a href="frmnewprp.aspx">Add New Property</a></li>
                     <li><a href="frmrev.aspx">Review</a></li>

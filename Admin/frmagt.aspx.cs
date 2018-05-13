@@ -57,7 +57,7 @@ public partial class Admin_Default : System.Web.UI.Page
             obj.Delete_Rec(objprp);
             searchResults();
         }
-        catch (SqlException exp)
+        catch
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('ERROR! Deleting Agent')", true);
         }

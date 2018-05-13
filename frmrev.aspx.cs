@@ -30,7 +30,7 @@ public partial class _Default : System.Web.UI.Page
         {
             obj.Save_Rec(objprp);
         }
-        catch (Exception exp)
+        catch
         {
 
         }

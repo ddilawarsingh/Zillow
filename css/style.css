@@ -364,6 +364,14 @@ h1, h2, h3, h4, h5, h6 {
   color: #ec5533;
 }
 
+li {
+    cursor: pointer;
+}
+
+.active {
+    color: #ec5533;
+}
+
 .nav-menu > li {
   margin-left: 10px;
 }
@@ -1610,5 +1618,4 @@ div#mainOuter {display: flex;flex-wrap: wrap;}
 .savedRatingStar {
     background-image: url(../img/SavedStar.png);
 }
-
 

@@ -10,10 +10,11 @@
         </header>
         <div class="row">
             <div class="col-md-10 offset-1">
-                <asp:GridView ID="grdview" ShowHeaderWhenEmpty="true" BorderWidth="0" ShowHeader="false" CssClass="col-md-12" DataKeyNames="appcod" runat="server" AutoGenerateColumns="False">
+                <asp:GridView ID="grdview" ShowHeaderWhenEmpty="true" BorderWidth="0" ShowHeader="false" CssClass="col-md-12" DataKeyNames="appcod" OnRowDeleting="grdview_RowDeleting" runat="server" AutoGenerateColumns="False">
                     <Columns>
                         <asp:TemplateField>
                             <ItemTemplate>
+                                <br />
                                 <table class="col-md-12" align="center">
                                     <tr>
                                         <td>
@@ -24,6 +25,14 @@
                                                 <tr>
                                                     <td colspan="2" align="center">
                                                         <h3><a href="frmprpdet.aspx?pcod=<%#Eval("prpcod") %>"><%#Eval("prptit") %></a></h3>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>
+                                                        <label><b>Appointment Status</b></label>
+                                                    </td>
+                                                    <td>
+                                                        <%#Eval("appsts").ToString() == "B" ? "Booked" : "Canceled"%>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -58,10 +67,16 @@
                                                         <%#Eval("appphn")%>
                                                     </td>
                                                 </tr>
+                                                <tr runat="server" visible='<%#Eval("appsts").ToString()=="B"? true:false %>'>
+                                                    <td colspan="2" align="center">
+                                                        <asp:LinkButton ID="lnkbtncancelapp" runat="server" CommandName="delete" Text="Cancel Appointment" CommandArgument='<%#Eval("appcod")%>'></asp:LinkButton>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </td>
                                     </tr>
                                 </table>
+                                <br />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

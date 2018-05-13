@@ -1188,6 +1188,20 @@ namespace nszillow
     }
     public class clsapp : clscon
     {
+        public String findagtbyapp(Int32 prpcod)
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlDataAdapter adp = new SqlDataAdapter("findagtbyapp", con);
+            adp.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adp.SelectCommand.Parameters.Add("@prpcod", SqlDbType.Int).Value = prpcod;
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+            return ds.Tables[0].Rows[0][0].ToString();
+            
+        }
         public DataSet Find_Rec_By_Agent(Int32 agtcod)
         {
             if (con.State == ConnectionState.Closed)
